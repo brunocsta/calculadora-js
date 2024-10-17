@@ -3,8 +3,13 @@ function criarCalculadora() {
   return {
     display: document.querySelector(".display"),
     btnClear: document.querySelector(".btn-clear"),
+
     clearDisplay() {
       this.display.value = "";
+    },
+
+    apagaUm() {
+      this.display.value = this.display.value.slice(0, -1);
     },
 
     iniciar() {
@@ -22,6 +27,10 @@ function criarCalculadora() {
 
         if (el.classList.contains("btn-clear")) {
           this.clearDisplay();
+        }
+
+        if (el.classList.contains("btn-del")) {
+          this.apagaUm();
         }
       });
     },
