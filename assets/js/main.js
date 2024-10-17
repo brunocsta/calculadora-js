@@ -61,5 +61,5 @@ function Calculadora() {
   };
 }
 
-const calc = new Calculadora();
-calc.iniciar();
+const calculadora = new Calculadora();
+calculadora.iniciar();
