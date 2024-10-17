@@ -27,6 +27,14 @@ function Calculadora() {
     });
   };
 
+  this.pressionaEnter = () => {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode === 13) {
+        this.realizaConta(this.display.value);
+      }
+    });
+  };
+
   this.btnParaDisplay = (valor) => {
     this.display.value += valor;
   };
@@ -48,8 +56,10 @@ function Calculadora() {
       this.display.value = eval(valor);
     } catch (e) {
       alert("Conta inválida!");
+      this.clearDisplay();
     }
   };
 }
 
 const calc = new Calculadora();
+calc.iniciar();
