@@ -2,6 +2,10 @@
 function criarCalculadora() {
   return {
     display: document.querySelector(".display"),
+    btnClear: document.querySelector(".btn-clear"),
+    clearDisplay() {
+      this.display.value = "";
+    },
 
     iniciar() {
       this.cliqueBotoes();
@@ -9,11 +13,15 @@ function criarCalculadora() {
 
     cliqueBotoes() {
       document.addEventListener("click", (e) => {
-        //com arrow function não preciso me preocupar com o .bin(), this
+        //com arrow function não preciso me preocupar com o .bind(), this
         //definido pelo escopo lexico é bem mais tranquilo
         const el = e.target;
         if (el.classList.contains("btn-num")) {
           this.btnParaDisplay(el.innerText);
+        }
+
+        if (el.classList.contains("btn-clear")) {
+          this.clearDisplay();
         }
       });
     },
