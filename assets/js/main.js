@@ -1,73 +1,55 @@
-//Uma chave deve ser referencia com this dentro do próprio objeto
-function criarCalculadora() {
-  return {
-    display: document.querySelector(".display"),
-    btnClear: document.querySelector(".btn-clear"),
+function Calculadora() {
+  this.display = document.querySelector(".display");
+  this.btnClear = document.querySelector(".btn-clear");
+  this.el;
 
-    clearDisplay() {
-      this.display.value = "";
-    },
+  this.iniciar = () => {
+    this.cliqueBotoes();
+    this.pressionaEnter();
+  };
 
-    apagaUm() {
-      this.display.value = this.display.value.slice(0, -1);
-    },
-
-    realizaConta(valor) {
-      try {
-        if (!valor) {
-          alert("Conta inválida!");
-          return;
-        }
-        this.display.value = eval(valor);
-      } catch (e) {
-        alert("Conta inválida!");
+  this.cliqueBotoes = () => {
+    document.addEventListener("click", (e) => {
+      this.el = e.target;
+      if (this.el.classList.contains("btn-num")) {
+        this.btnParaDisplay(this.el.innerText);
       }
-    },
+      if (this.el.classList.contains("btn-clear")) {
+        this.clearDisplay();
+      }
+      if (this.el.classList.contains("btn-del")) {
+        this.apagaUm();
+      }
+      if (this.el.classList.contains("btn-eq")) {
+        this.realizaConta(this.display.value);
+      }
+      this.display.focus();
+    });
+  };
 
-    iniciar() {
-      this.cliqueBotoes();
-      this.pressionaEnter();
-    },
+  this.btnParaDisplay = (valor) => {
+    this.display.value += valor;
+  };
 
-    pressionaEnter() {
-      this.display.addEventListener("keydown", (e) => {
-        //onsole.log(e);
-        if (e.keyCode === 13) {
-          this.realizaConta(this.display.value);
-        }
-      });
-    },
+  this.clearDisplay = () => {
+    this.display.value = "";
+  };
 
-    cliqueBotoes() {
-      document.addEventListener("click", (e) => {
-        //com arrow function não preciso me preocupar com o .bind(), this
-        //definido pelo escopo lexico é bem mais tranquilo
-        const el = e.target;
-        if (el.classList.contains("btn-num")) {
-          this.btnParaDisplay(el.innerText);
-        }
+  this.apagaUm = () => {
+    this.display.value = this.display.value.slice(0, -1);
+  };
 
-        if (el.classList.contains("btn-clear")) {
-          this.clearDisplay();
-        }
-
-        if (el.classList.contains("btn-del")) {
-          this.apagaUm();
-        }
-
-        if (el.classList.contains("btn-eq")) {
-          this.realizaConta(this.display.value);
-        }
-
-        this.display.focus();
-      });
-    },
-
-    btnParaDisplay(valor) {
-      this.display.value += valor;
-    },
+  this.realizaConta = (valor) => {
+    try {
+      if (!valor) {
+        alert("Conta inválida!");
+        return;
+      }
+      this.display.value = eval(valor);
+    } catch (e) {
+      alert("Conta inválida!");
+    }
   };
 }
 
-const calculadora = criarCalculadora();
-calculadora.iniciar();
+const calc = new Calculadora();
