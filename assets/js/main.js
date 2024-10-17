@@ -12,16 +12,13 @@ function criarCalculadora() {
       this.display.value = this.display.value.slice(0, -1);
     },
 
-    realizaConta() {
-      let conta = this.display.value;
-
+    realizaConta(valor) {
       try {
-        conta = eval(conta);
-        if (!conta) {
+        if (!valor) {
           alert("Conta inválida!");
           return;
         }
-        this.display.value = String(conta);
+        this.display.value = eval(valor);
       } catch (e) {
         alert("Conta inválida!");
       }
@@ -29,6 +26,16 @@ function criarCalculadora() {
 
     iniciar() {
       this.cliqueBotoes();
+      this.pressionaEnter();
+    },
+
+    pressionaEnter() {
+      this.display.addEventListener("keydown", (e) => {
+        //onsole.log(e);
+        if (e.keyCode === 13) {
+          this.realizaConta(this.display.value);
+        }
+      });
     },
 
     cliqueBotoes() {
@@ -49,8 +56,10 @@ function criarCalculadora() {
         }
 
         if (el.classList.contains("btn-eq")) {
-          this.realizaConta();
+          this.realizaConta(this.display.value);
         }
+
+        this.display.focus();
       });
     },
 
